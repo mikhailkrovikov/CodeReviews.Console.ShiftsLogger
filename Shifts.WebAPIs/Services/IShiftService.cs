@@ -8,6 +8,6 @@ namespace Shifts.WebAPIs.Services
         public Task<List<Shift>?> GetAllShifts();
         public Task<Shift> CreateShift(Shift shift);
         public Task<Shift?> UpdateShift(int id, Shift shift);
-        public Task<string> DeleteShift(int id);
+        public Task<bool> DeleteShift(int id);
     }
 }

@@ -56,7 +56,7 @@ namespace Shifts.Logger
         public static async Task<bool> UpdateShift()
         {
             var id = AnsiConsole.Ask<int>("Enter id of updated shift:");
-            var shift = ShiftsAPI.GetShiftById(id);
+            var shift = await ShiftsAPI.GetShiftById(id);
             if (shift == null)
             {
                 AnsiConsole.MarkupLine($"No shift with such id: {id}");
@@ -66,7 +66,11 @@ namespace Shifts.Logger
             var employee = AnsiConsole.Ask<string>("Enter name of employee:");
             var startTime = AnsiConsole.Ask<DateTime>("Enter start time (MM-dd-YY HH:mm:ss):");
             var endTime = AnsiConsole.Ask<DateTime>("Enter end time (MM-dd-YY HH:mm:ss):");
-
+            if (endTime < startTime)
+            {
+                AnsiConsole.MarkupLine($"End time: {endTime} cannot be less then start time: {startTime}");
+                return false;
+            }
             var updatedShift = new Shift
             {
                 Employee = employee,
@@ -80,7 +84,7 @@ namespace Shifts.Logger
         public static async Task<bool> DeleteShift()
         {
             var id = AnsiConsole.Ask<int>("Enter id of deleted shift:");
-            var shift = ShiftsAPI.GetShiftById(id);
+            var shift = await ShiftsAPI.GetShiftById(id);
             if (shift == null)
             {
                 AnsiConsole.MarkupLine($"No shift with such id: {id}");

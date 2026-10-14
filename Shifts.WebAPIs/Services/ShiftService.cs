@@ -20,16 +20,16 @@ namespace Shifts.WebAPIs.Services
             return entity.Entity;
         }
 
-        public async Task<string> DeleteShift(int id)
+        public async Task<bool> DeleteShift(int id)
         {
             var shift = await _dbContext.Shifts.FirstOrDefaultAsync(x => x.Id == id);
             if (shift == null)
             {
-                return $"Not such shift with id {id}";
+                return false;
             }
             _dbContext.Remove(shift);
             await _dbContext.SaveChangesAsync();
-            return $"Shift with id {id} succesfully deleted";
+            return true;
         }
 
         public async Task<List<Shift>?> GetAllShifts()

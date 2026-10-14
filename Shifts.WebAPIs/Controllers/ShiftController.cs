@@ -57,7 +57,7 @@ namespace Shifts.WebAPIs.Controllers
         public async Task<ActionResult<string>> DeleteShift(int id)
         {
             var result = await _shiftService.DeleteShift(id);
-            if (result == null)
+            if (!result)
             {
                 return NotFound();
             }
